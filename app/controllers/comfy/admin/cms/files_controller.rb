@@ -9,16 +9,17 @@ class Comfy::Admin::Cms::FilesController < Comfy::Admin::Cms::BaseController
   def index
     case params[:source]
     when 'redactor'
-      file_scope  = @site.files.limit(100).order('created_at DESC')
+      files_scope  = @site.files.limit(100).order('created_at DESC')
+      files_scope = files_scope.where('comfy_cms_files.label LIKE ? OR comfy_cms_files.description LIKE ?', "%#{params[:q]}%", "%#{params[:q]}%") if params[:source] == 'filter'
       file_hashes = case params[:type]
       when 'image'
-        file_scope.images.collect do |image|
+        files_scope.images.collect do |image|
           { :thumb => image.file.url(:cms_thumb),
             :image => image.file.url,
             :title => image.label }
         end
       else
-        file_scope.collect do |file|
+        files_scope.collect do |file|
           { :title  => file.label,
             :name   => file.file_file_name,
             :link   => file.file.url,
@@ -31,6 +32,7 @@ class Comfy::Admin::Cms::FilesController < Comfy::Admin::Cms::BaseController
         .includes(:categories)
         .for_category(params[:category])
         .order('comfy_cms_files.position')
+      files_scope = files_scope.where('comfy_cms_files.label LIKE ? OR comfy_cms_files.description LIKE ?', "%#{params[:q]}%", "%#{params[:q]}%") if params[:source] == 'filter'
       @files = comfy_paginate(files_scope, 50)
     end
   end
@@ -67,7 +69,7 @@ class Comfy::Admin::Cms::FilesController < Comfy::Admin::Cms::BaseController
   def update
     if @file.update(file_params)
       flash[:success] = I18n.t('comfy.admin.cms.files.updated')
-      redirect_to :action => :edit, :id => @file
+      redirect_to :action => :index
     else
       flash.now[:danger] = I18n.t('comfy.admin.cms.files.update_failure')
       render :action => :edit

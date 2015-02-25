@@ -9,7 +9,7 @@
 
   = render 'comfy/admin/cms/partials/files_before'
 
-  = render :partial => 'comfy/admin/cms/categories/index', :object => 'Comfy::Cms::File'
+  = render :partial => 'comfy/admin/cms/files/filter', locals: { type: 'Comfy::Cms::File' }
 
   = comfy_paginate @files
 

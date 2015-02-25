@@ -19,6 +19,7 @@ window.CMS.init = ->
   CMS.page_update_preview()
   CMS.page_update_publish()
   CMS.categories()
+  CMS.files_filtering()
   CMS.files()
 
 window.CMS.slugify = ->
@@ -146,6 +147,31 @@ window.CMS.categories = ->
     $('.categories.editable', '.categories-widget').toggle()
     $('.edit', '.categories-widget').toggle()
     $('.done', '.categories-widget').toggle()
+
+
+window.CMS.files_filtering = ->
+  $('.reset-button', '.library-filter-widget .filter-widget .input-group-btn').click (event) ->
+    event.preventDefault()
+    $('input', '.library-filter-widget .filter-widget .input-group').val('')
+    $('select#category').val(null)
+    $('.search-button', '.library-filter-widget .filter-widget .input-group-btn').click()
+
+  $('a', '.categories-filter-widget').click (event) ->
+    event.preventDefault()
+    label = this.textContent
+    tgt = this
+    $('select#category option').each (i, el) ->
+      if el.value == label
+        el.selected = !el.selected
+        $(tgt).parent().toggleClass('active')
+    $('#js-all-categories').parent().toggleClass('active', $('select#category').val() == null)
+    console.log($('select#category').val())
+
+  $('#js-all-categories').click (event) ->
+    event.preventDefault()
+    $('select#category').val('')
+    $('.categories.list div', '.categories-filter-widget').removeClass('active')
+    $('#js-all-categories').parent().toggleClass('active', $('select#category').val() == null)
 
 
 # If we are inside an iframe remove the columns and just keep the center column content.

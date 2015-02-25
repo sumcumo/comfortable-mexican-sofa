@@ -225,6 +225,15 @@ en:
             are_you_sure: Are you sure?
           file:
             are_you_sure: Are you sure?
+            edit: Edit
+            delete: Delete
+          filter:
+            search_term: Search for
+            search_placeholder: search terms
+            search: Search
+            reset: Reset
+            in_categories: in categories
+            all: All
 
         categories:
           index:
