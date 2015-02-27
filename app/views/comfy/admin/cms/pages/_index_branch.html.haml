@@ -7,13 +7,13 @@
 - category_view = params[:category].present?
 
 %li{:id => dom_id(page)}
-  .item
+  .item{:class => page.state}
     .toggle{:class => branch_open ? 'open' : nil}
       - if !category_view && has_children && !page.root?
         = link_to toggle_branch_comfy_admin_cms_site_page_path(@site, page), :remote => true do
           %span= t('.toggle')
         
-    .icon{:class => page.is_published?? 'published' : 'draft'}
+    .icon
       - if !category_view && has_siblings
         .dragger
           %span &#8645;

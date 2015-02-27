@@ -76,6 +76,10 @@ class Comfy::Cms::Page < ActiveRecord::Base
     end
   end
 
+  def state
+    self.is_published? ? 'published' : 'draft'
+  end
+
 protected
 
   def assigns_label
