@@ -16,6 +16,7 @@ class ActionDispatch::Routing::Mapper
             :format       => :xml
         end
 
+        # -> Comfy::CMS::ContentController#show
         get '/:format' => 'content#show', :as => 'render_page', :path => "(*cms_path)"
       end
     end

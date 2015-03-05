@@ -129,6 +129,8 @@ body#comfy
       background-color: #fff
       border-radius: 3px
       border-left-width: 7px
+      &.active
+        border-color: #a5a5a5
   .item-title
     color: #000
     a
@@ -165,6 +167,22 @@ body#comfy
     span.version
       color: #f1f1f1
       margin-left: 2px
+
+  // -- File Filter Widget --------------------------------------------------
+  .library-filter-widget
+    background: #f5f5f5
+    border-radius: 3px
+    border: 1px solid #ddd
+    padding: 5px 10px
+    margin-bottom: 10px
+    .filter-widget-label, .categories-filter-widget-label
+      width: 100px
+      float: left
+      color: #777
+      line-height: 20px
+      padding: 5px 0
+    .categories-filter-widget .categories.list
+      padding: 7px 0 0 0
 
   // -- Categories Widget ---------------------------------------------------
   .categories-widget

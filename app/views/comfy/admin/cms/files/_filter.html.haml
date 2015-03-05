@@ -1,0 +1,49 @@
+.library-filter-widget
+  = form_tag comfy_admin_cms_site_files_path(@site), :method => 'GET', :remote => false, :id => 'file_filter' do
+    = hidden_field_tag :source, 'filter'
+    .filter-widget
+      .filter-widget-label= t('.search_term')
+    
+      .filter
+        .input-group
+          = search_field_tag :q, params[:q] || '', :placeholder => t('.search_placeholder'), :class => 'form-control'
+          .input-group-btn
+            %button.btn.btn-primary.btn-s.search-button= t('.search')
+            %button.btn.btn-s.reset-button= t('.reset')
+
+    .categories-filter-widget
+      .categories-filter-widget-label= t('.in_categories')
+      
+      %ul.categories.list
+        = select_tag "category", options_from_collection_for_select(@site.categories.of_type(type), 'label', 'label', selected: params[:category]), multiple: true, class: 'hidden'
+        .category.all{:class => params[:category].blank? ? 'active' : nil}
+          %a#js-all-categories(href="#")= t('.all')
+        - @site.categories.of_type(type).each do |category|
+          = render :partial => 'comfy/admin/cms/categories/show', :object => category, :locals => { :read => true }
+        /
+          .category.all{:class => params[:category].blank? ? 'active' : nil}
+            = link_to t('.all'), :category => nil, :id => 'js-all-categories'
+          - @site.categories.of_type(type).each do |category|
+            = render :partial => 'comfy/admin/cms/categories/show', :object => category, :locals => { :read => true }
+
+  /
+    .action-links
+      .edit= link_to t('.edit'), '#', :class => 'btn btn-default btn-xs'
+      .done= link_to t('.done'), '#', :class => 'btn btn-default btn-xs'
+    
+    .categories.read
+      .category.all{:class => params[:category].blank?? 'active' : nil}
+        = link_to t('.all'), :category => nil
+      - @site.categories.of_type(type).each do |category|
+        = render :partial => 'comfy/admin/cms/categories/show', :object => category, :locals => { :read => true }
+    
+    .categories.editable
+      - @site.categories.of_type(type).each do |category|
+        = render :partial => 'comfy/admin/cms/categories/show', :object => category
+      
+      = form_for :category, :url => comfy_admin_cms_site_categories_path(@site), :remote => true, :html => {:id => 'new_category'} do |form|
+        = form.hidden_field :categorized_type, :value => type
+        .input-group
+          = form.text_field :label, :placeholder => t('.add_placeholder'), :class => 'form-control'
+          .input-group-btn
+            %button.btn.btn-primary.btn-xs= t('.add')

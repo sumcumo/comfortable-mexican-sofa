@@ -227,6 +227,15 @@ de:
             are_you_sure: Sind Sie sicher?
           file:
             are_you_sure: Sind Sie sicher?
+            edit: Datei bearbeiten
+            delete: Datei löschen
+          filter:
+            search_term: Suche nach
+            search_placeholder: Suchbegriff
+            search: Suchen
+            reset: Löschen
+            in_categories: in Kategorien
+            all: Alle
 
         categories:
           index:

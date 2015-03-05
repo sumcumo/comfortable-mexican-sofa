@@ -6,14 +6,34 @@ class Comfy::Admin::Cms::FilesController < Comfy::Admin::Cms::BaseController
   before_action :authorize
 
   def index
-    files_scope = @site.files.not_page_file
-      .includes(:categories)
-      .for_category(params[:category])
-      .order('comfy_cms_files.position')
-
-    files_scope = files_scope.images if params[:type] == 'image'
-
-    @files = comfy_paginate(files_scope, 50)
+    case params[:source]
+    when 'redactor'
+      files_scope  = @site.files.limit(100).order('created_at DESC')
+      files_scope = files_scope.where('comfy_cms_files.label LIKE ? OR comfy_cms_files.description LIKE ?', "%#{params[:q]}%", "%#{params[:q]}%") if params[:source] == 'filter'
+      file_hashes = case params[:type]
+      when 'image'
+        files_scope.images.collect do |image|
+          { :thumb => image.file.url(:cms_thumb),
+            :image => image.file.url,
+            :title => image.label }
+        end
+      else
+        files_scope.collect do |file|
+          { :title  => file.label,
+            :name   => file.file_file_name,
+            :link   => file.file.url,
+            :size   => number_to_human_size(file.file_file_size) }
+        end
+      end
+      render :json => file_hashes
+    else
+      files_scope = @site.files.not_page_file
+        .includes(:categories)
+        .for_category(params[:category])
+        .order('comfy_cms_files.position')
+      files_scope = files_scope.where('comfy_cms_files.label LIKE ? OR comfy_cms_files.description LIKE ?', "%#{params[:q]}%", "%#{params[:q]}%") if params[:source] == 'filter'
+      @files = comfy_paginate(files_scope, 50)
+    end
   end
 
   def new
@@ -44,7 +64,7 @@ class Comfy::Admin::Cms::FilesController < Comfy::Admin::Cms::BaseController
   def update
     if @file.update(file_params)
       flash[:success] = I18n.t('comfy.admin.cms.files.updated')
-      redirect_to :action => :edit, :id => @file
+      redirect_to :action => :index
     else
       flash.now[:danger] = I18n.t('comfy.admin.cms.files.update_failure')
       render :action => :edit
