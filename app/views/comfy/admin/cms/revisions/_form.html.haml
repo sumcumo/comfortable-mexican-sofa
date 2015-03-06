@@ -1,9 +1,7 @@
 - content_for :right_column do
-  #form-save.box
-    %label.checkbox-inline
-      %input{:type => 'checkbox'}
-      = ::Comfy::Cms::Page.human_attribute_name(:is_published)
-    %button.btn.btn-sm.btn-primary.pull-right
+  .box.revisions
+    - @record.revisions.each do |revision|
+      = active_link_to l(revision.created_at), { :id => revision.id }#, { :class => 'current_published_id' }
 
 = render 'comfy/admin/cms/partials/page_form_before', :form => form
 
@@ -29,12 +27,10 @@
 
 = render 'form_blocks'
 
-= form.form_group :is_published do
-  = form.check_box :is_published, :label => t('.is_published')
-
 = render 'comfy/admin/cms/partials/page_form_after', :form => form
 
 = form.form_group :class => 'form-actions' do
   = form.submit t('.preview'), :name => 'preview', :id => nil, :class => 'btn btn-default'
-  = form.submit t(@page.new_record? ? '.create' : '.update'), :class => 'btn btn-primary'
+  = form.submit t(@page.new_record? ? '.create' : '.update'), :name => 'save', :class => 'btn btn-primary'
+  = form.submit t(@page.new_record? ? '.create_and_publish' : '.publish'), :name => 'publish', :class => 'btn btn-success'
   = link_to t('.cancel'), comfy_admin_cms_site_pages_path, :class => 'btn btn-link'

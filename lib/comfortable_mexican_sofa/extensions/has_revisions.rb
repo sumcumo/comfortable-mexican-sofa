@@ -11,6 +11,7 @@ module ComfortableMexicanSofa::HasRevisions
       include ComfortableMexicanSofa::HasRevisions::InstanceMethods
       
       attr_accessor :revision_data
+      attr_accessor :skip_create_revision
       
       has_many :revisions,
         :as         => :record,
@@ -43,6 +44,7 @@ module ComfortableMexicanSofa::HasRevisions
     # Revision is created only if relevant data changed
     def create_revision
       return unless self.revision_data
+      return if self.skip_create_revision
       
       # creating revision
       if ComfortableMexicanSofa.config.revisions_limit.to_i != 0
@@ -52,6 +54,18 @@ module ComfortableMexicanSofa::HasRevisions
       # blowing away old revisions
       ids = [0] + self.revisions.limit(ComfortableMexicanSofa.config.revisions_limit.to_i).collect(&:id)
       self.revisions.where('id NOT IN (?)', ids).destroy_all
+    end
+
+    def prepare_inverse_revision
+      return if self.new_record?
+      if (self.respond_to?(:blocks_attributes_changed) && self.blocks_attributes_changed) || 
+        !(self.changed & revision_fields).empty?
+        self.revision_data = revision_fields.inject({}) do |c, field|
+          c[field] = self.send(field)
+          c
+        end
+      end
+
     end
     
     # Assigning whatever is found in revision data and attemptint to save the object

@@ -25,7 +25,7 @@ class Comfy::Admin::Cms::PagesController < Comfy::Admin::Cms::BaseController
   end
 
   def edit
-    render
+    redirect_to edit_comfy_admin_cms_site_page_revision_path(@site, @page, @page.revisions.first)
   end
 
   def create
@@ -35,15 +35,6 @@ class Comfy::Admin::Cms::PagesController < Comfy::Admin::Cms::BaseController
   rescue ActiveRecord::RecordInvalid
     flash.now[:danger] = I18n.t('comfy.admin.cms.pages.creation_failure')
     render :action => :new
-  end
-
-  def update
-    @page.save!
-    flash[:success] = I18n.t('comfy.admin.cms.pages.updated')
-    redirect_to :action => :edit, :id => @page
-  rescue ActiveRecord::RecordInvalid
-    flash.now[:danger] = I18n.t('comfy.admin.cms.pages.update_failure')
-    render :action => :edit
   end
 
   def destroy
@@ -117,7 +108,7 @@ protected
   end
 
   def load_cms_page
-    @page = @site.pages.find(params[:id])
+    @page = @site.pages.find(params[:id] || params[:page_id])
     @page.attributes = page_params
     @page.layout ||= (@page.parent && @page.parent.layout || @site.layouts.first)
   rescue ActiveRecord::RecordNotFound
@@ -125,9 +116,20 @@ protected
     redirect_to :action => :index
   end
 
+  def load_from_revision
+    @page = @site.pages.find(params[:page_id])
+    @page.attributes = page_params
+    @page.layout ||= (@page.parent && @page.parent.layout || @site.layouts.first)
+    revision = @page.revisions.find(params[:revision_id])
+    page = @page.blocks.inject({}){|c, b| c[b.identifier] = revision.data['blocks_attributes'].detect{|r| r[:identifier] == b.identifier}.try(:[], :content); c }
+  rescue ActiveRecord::RecordNotFound
+    flash[:danger] = I18n.t('comfy.admin.cms.pages.not_found')
+    redirect_to :action => :index
+  end
+
   def preview_cms_page
     if params[:preview]
-      layout = @page.layout.app_layout.blank?? false : @page.layout.app_layout
+      layout = @page.layout.app_layout.blank? ? false : @page.layout.app_layout
       @cms_site   = @page.site
       @cms_layout = @page.layout
       @cms_page   = @page

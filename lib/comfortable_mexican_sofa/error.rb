@@ -20,5 +20,11 @@ module ComfortableMexicanSofa
       super "Cannot find CMS Page at #{path}"
     end
   end
+
+  class NotImplementedError < ComfortableMexicanSofa::Error
+    def initialize(msg=nil)
+      super(msg || "Not implemented")
+    end
+  end
   
 end
