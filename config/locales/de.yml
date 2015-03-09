@@ -200,12 +200,12 @@ de:
             select_target_page: Keine Weiterleitung
             preview: Vorschau
             create: Seite erstellen
+            create_and_publish: Speichern und veröffentlichen
+            update: Als Entwurf speichern
+            publish: Veröffentlichen
             cancel: Abbrechen
-            update: Seite speichern
             is_published: Veröffentlicht
             choose_link: Seite auswählen...
-            create_and_publish: Speichern und veröffentlichen
-            publish: Veröffentlichen
           form_blocks:
             no_tags: |-
               Das gewählte Layout hat kein Comfy-Tags deklariert, daher kann diese Seite nicht bearbeitet werden.<br/>

@@ -197,12 +197,12 @@ en:
             select_target_page: No Redirect
             preview: Preview
             create: Create Page
+            create_and_publish: Create and Publish
+            update: Save as Draft
+            publish: Publish
             cancel: Cancel
-            update: Update Page
             is_published: Published
             choose_link: Select page...
-            create_and_publish: Create and Publish
-            publish: Publish
           form_blocks:
             no_tags: |-
               Layout has no content tags defined.<br/>
