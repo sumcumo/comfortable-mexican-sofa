@@ -39,6 +39,7 @@ class Comfy::Admin::Cms::RevisionsController < Comfy::Admin::Cms::BaseController
       load_from_revision
       render 'comfy/admin/cms/pages/edit'
     else
+      # You should not be here.
       raise ComfortableMexicanSofa::NotImplementedError
     end
   end
@@ -46,8 +47,6 @@ class Comfy::Admin::Cms::RevisionsController < Comfy::Admin::Cms::BaseController
   def update
     case @record
     when Comfy::Cms::Page
-      # raise 'x'
-      # blocks_attributes_changed
       load_cms_page
       preview_cms_page
 
