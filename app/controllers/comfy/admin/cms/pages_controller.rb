@@ -25,6 +25,10 @@ class Comfy::Admin::Cms::PagesController < Comfy::Admin::Cms::BaseController
   end
 
   def edit
+    if @page.revisions.size == 0
+      @page.prepare_inverse_revision!
+      @page.create_revision
+    end
     redirect_to edit_comfy_admin_cms_site_page_revision_path(@site, @page, @page.revisions.first)
   end
 
