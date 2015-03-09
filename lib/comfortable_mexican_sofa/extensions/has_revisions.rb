@@ -28,17 +28,31 @@ module ComfortableMexicanSofa::HasRevisions
   end
   
   module InstanceMethods
-    
+
     # Preparing revision data. A bit of a special thing to grab page blocks
-    def prepare_revision
-      return if self.new_record?
-      if (self.respond_to?(:blocks_attributes_changed) && self.blocks_attributes_changed) || 
-        !(self.changed & revision_fields).empty?
+    def save_revision_data(only_if_changed=true, method_pattern='%s')
+      # return if self.new_record?
+      if !only_if_changed ||
+         ((self.respond_to?(:blocks_attributes_changed) && self.blocks_attributes_changed) || !(self.changed & revision_fields).empty?)
         self.revision_data = revision_fields.inject({}) do |c, field|
-          c[field] = self.send("#{field}_was")
+          c[field] = self.send(method_pattern % field)
           c
         end
       end
+    end
+    
+    def prepare_revision
+      return if self.new_record?
+      self.save_revision_data(true, '%s_was')
+    end
+    
+    def prepare_inverse_revision
+      return if self.new_record?
+      self.save_revision_data(true)
+    end
+    
+    def prepare_inverse_revision!
+      self.save_revision_data(false, '%s')
     end
     
     # Revision is created only if relevant data changed
@@ -56,18 +70,6 @@ module ComfortableMexicanSofa::HasRevisions
       self.revisions.where('id NOT IN (?)', ids).destroy_all
     end
 
-    def prepare_inverse_revision
-      return if self.new_record?
-      if (self.respond_to?(:blocks_attributes_changed) && self.blocks_attributes_changed) || 
-        !(self.changed & revision_fields).empty?
-        self.revision_data = revision_fields.inject({}) do |c, field|
-          c[field] = self.send(field)
-          c
-        end
-      end
-
-    end
-    
     # Assigning whatever is found in revision data and attemptint to save the object
     def restore_from_revision(revision)
       return unless revision.record == self
