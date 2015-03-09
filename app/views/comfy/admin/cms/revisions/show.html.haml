@@ -6,9 +6,14 @@
     = @record.is_a?(::Comfy::Cms::Page) ? "#{t('.full_path')}: #{@record.full_path}" : "#{t('.slug')}: #{@record.identifier}"
 
 - content_for :right_column do
-  .box.revisions
-    - @record.revisions.each do |revision|
-      = active_link_to l(revision.created_at), :id => revision.id
+  = form_tag comfy_admin_cms_site_page_compare_revisions_path, :method => :get do |f|
+    %ul.box.revisions
+      - @record.revisions.each do |revision|
+        %li
+          = radio_button_tag 'revision_id', revision.id, params[:id].to_i == revision.id
+          = radio_button_tag 'second_revision_id', revision.id, params[:second_revision_id].to_i == revision.id
+          = active_link_to l(revision.created_at), { :id => revision.id }#, { :class => 'current_published_id' }
+      = submit_tag 'Compare'
 
 %table.table
   %tr
