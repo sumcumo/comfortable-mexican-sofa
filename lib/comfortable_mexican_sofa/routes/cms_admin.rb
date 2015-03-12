@@ -9,12 +9,14 @@ class ActionDispatch::Routing::Mapper
           get '/', :to => 'base#jump'
           resources :sites do
             resources :pages do
-              get  :form_blocks,    :on => :member
-              get  :toggle_branch,  :on => :member
-              put :reorder,         :on => :collection
-              resources :revisions, :only => [:index, :show, :revert] do
+              get :form_blocks,    :on => :member
+              get :toggle_branch,  :on => :member
+              put :reorder,        :on => :collection
+              resources :revisions, :only => [:index, :show, :revert, :edit, :update] do
                 patch :revert, :on => :member
+                get :compare, :on => :collection
               end
+              # get 'revisions/:id/compare/:second_revision_id', :controller => :revisions, :action => :compare, :as => :compare_revisions
             end
             resources :files do
               put :reorder, :on => :collection

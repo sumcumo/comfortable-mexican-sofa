@@ -6,9 +6,18 @@
     = @record.is_a?(::Comfy::Cms::Page) ? "#{t('.full_path')}: #{@record.full_path}" : "#{t('.slug')}: #{@record.identifier}"
 
 - content_for :right_column do
-  .box.revisions
-    - @record.revisions.each do |revision|
-      = active_link_to l(revision.created_at), :id => revision.id
+  = form_tag compare_comfy_admin_cms_site_page_revisions_path, :method => :get do |f|
+    %ul.box.revisions.compare-revisions-widget
+      - @record.revisions.each do |revision|
+        - li_classes = []
+        - li_classes << 'first' if params[:revision_id].to_i == revision.id
+        - li_classes << 'second' if params[:second_revision_id].to_i == revision.id
+        - li_classes << 'published' if @record.last_published_revision_id == revision.id
+        %li{ :class => li_classes }
+          = radio_button_tag 'revision_id', revision.id, params[:revision_id].to_i == revision.id
+          = radio_button_tag 'second_revision_id', revision.id, params[:second_revision_id].to_i == revision.id
+          = active_link_to l(revision.created_at), { :revision_id => revision.id }
+      = submit_tag t('.compare')
 
 %table.table
   %tr
@@ -30,6 +39,6 @@
             %th= t('.current')
             %td.main.diff
 
-= comfy_form_for @revision, :url => {:action => :revert} do |form|
+= comfy_form_for @revision, :url => {:action => :revert, :id => @revision.id} do |form|
   = form.form_group :class => 'form-actions' do
     = form.submit t('.update'), :class => 'btn btn-primary'

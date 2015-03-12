@@ -194,8 +194,23 @@ de:
             update: Zurücksetzen auf gewählte Version
             content: Inhalt
             changes: Änderungen
-            previous: Vorherige Version
+            previous: Vorher
             current: Aktuell
+            compare: Vergleichen
+          form:
+            select_target_page: Keine Weiterleitung
+            preview: Vorschau
+            create: Seite erstellen
+            create_and_publish: Speichern und veröffentlichen
+            update: Als Entwurf speichern
+            publish: Veröffentlichen
+            cancel: Abbrechen
+            is_published: Veröffentlicht
+            choose_link: Seite auswählen...
+          form_blocks:
+            no_tags: |-
+              Das gewählte Layout hat kein Comfy-Tags deklariert, daher kann diese Seite nicht bearbeitet werden.<br/>
+              Beispiel: <code>{{ cms:page:content }}</code>
 
         files:
           created: Datei hochgeladen

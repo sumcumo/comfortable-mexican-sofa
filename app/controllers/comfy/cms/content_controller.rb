@@ -6,6 +6,7 @@ class Comfy::Cms::ContentController < Comfy::Cms::BaseController
   before_action :load_fixtures
   before_action :load_cms_page,
                 :authenticate,
+                :check_scheduled,
                 :only => :show
 
   rescue_from ActiveRecord::RecordNotFound, :with => :page_not_found
@@ -52,6 +53,14 @@ protected
 
   def load_cms_page
     @cms_page = @cms_site.pages.published.find_by_full_path!("/#{params[:cms_path]}")
+  end
+
+  def check_scheduled
+    return if @cms_page.scheduled_revision_id.nil? || @cms_page.scheduled_revision_datetime.nil?
+    if @cms_page.scheduled_revision_id != @cms_page.last_published_revision_id && @cms_page.scheduled_revision_datetime <= Time.now
+      @revision = @cms_page.revisions.find(@cms_page.scheduled_revision_id)
+      @cms_page.publish_scheduled_revision(@revision)
+    end
   end
 
   def page_not_found

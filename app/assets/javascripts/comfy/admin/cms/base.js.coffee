@@ -17,6 +17,7 @@ window.CMS.init = ->
   CMS.mirrors()
   CMS.page_update_preview()
   CMS.page_update_publish()
+  CMS.compare_revisions()
   CMS.categories()
   CMS.files_filtering()
   CMS.files()
@@ -134,6 +135,15 @@ window.CMS.page_update_publish = ->
     $('input', widget).prop('checked', $(this).is(':checked'))
   $('button', widget).click ->
     $('input[name=commit]').click()
+
+
+window.CMS.compare_revisions = ->
+  $('.compare-revisions-widget li input[type=radio]').prop('disabled', false)
+  $('.compare-revisions-widget li input[type=radio]:checked').siblings('input[type=radio]').prop('disabled', true)
+  $('.compare-revisions-widget')
+    .find('input[type=radio]').click (event) ->
+      $('.compare-revisions-widget li input[type=radio]').prop('disabled', false)
+      $('.compare-revisions-widget li input[type=radio]:checked').siblings('input[type=radio]').prop('disabled', true)
 
 
 window.CMS.categories = ->

@@ -183,7 +183,6 @@ en:
           reverted: Content Reverted
           record_not_found: Record Not Found
           not_found: Revision Not Found
-
           show:
             title: Revisions for
             revision: Revision
@@ -194,6 +193,21 @@ en:
             changes: Changes
             previous: Previous
             current: Current
+            compare: Compare
+          form:
+            select_target_page: No Redirect
+            preview: Preview
+            create: Create Page
+            create_and_publish: Create and Publish
+            update: Save as Draft
+            publish: Publish
+            cancel: Cancel
+            is_published: Published
+            choose_link: Select page...
+          form_blocks:
+            no_tags: |-
+              Layout has no content tags defined.<br/>
+              Edit the content to include a page or field tag. For example: <code>{{cms:page:content}}</code>
 
         files:
           created: Files uploaded
