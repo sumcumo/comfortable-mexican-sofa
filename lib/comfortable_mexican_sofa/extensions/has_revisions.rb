@@ -75,6 +75,14 @@ module ComfortableMexicanSofa::HasRevisions
       return unless revision.record == self
       self.update_attributes!(revision.data)
     end
+
+    def publish_scheduled_revision(revision)
+      pub_rev_data = revision.data
+      pub_rev_data['last_published_revision_id'] = revision.id
+      pub_rev_data['scheduled_revision_id'] = nil
+      pub_rev_data['scheduled_revision_datetime'] = nil
+      self.update_attributes!(pub_rev_data)
+    end
   end
 end
 

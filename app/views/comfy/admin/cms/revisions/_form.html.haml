@@ -1,7 +1,11 @@
 - content_for :right_column do
-  .box.revisions
+  %ul.box.revisions
     - @record.revisions.each do |revision|
-      = active_link_to l(revision.created_at), { :id => revision.id }#, { :class => 'current_published_id' }
+      - li_classes = []
+      - li_classes << 'active' if params[:id].to_i == revision.id
+      - li_classes << 'published' if @record.last_published_revision_id == revision.id
+      %li{ :class => li_classes }
+        = active_link_to l(revision.created_at), { :id => revision.id }
 
 = render 'comfy/admin/cms/partials/page_form_before', :form => form
 

@@ -12,8 +12,8 @@
         - li_classes = []
         - li_classes << 'first' if params[:revision_id].to_i == revision.id
         - li_classes << 'second' if params[:second_revision_id].to_i == revision.id
-        - li_classes << 'current' if false # xxx
-        %li{ :class => li_classes}
+        - li_classes << 'published' if @record.last_published_revision_id == revision.id
+        %li{ :class => li_classes }
           = radio_button_tag 'revision_id', revision.id, params[:revision_id].to_i == revision.id
           = radio_button_tag 'second_revision_id', revision.id, params[:second_revision_id].to_i == revision.id
           = active_link_to l(revision.created_at), { :revision_id => revision.id }

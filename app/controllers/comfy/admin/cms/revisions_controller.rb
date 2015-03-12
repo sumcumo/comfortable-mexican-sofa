@@ -59,7 +59,7 @@ class Comfy::Admin::Cms::RevisionsController < Comfy::Admin::Cms::BaseController
           @page.is_published = true
           @page.revision_data = nil
           @page.skip_create_revision = true
-          # @page.last_published_revision = @revision
+          @page.last_published_revision_id = @page.revisions.first.id
           @page.save!
           flash[:success] = I18n.t('comfy.admin.cms.pages.updated')
           redirect_to :controller => :pages, :action => :edit, :id => @page
