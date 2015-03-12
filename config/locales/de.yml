@@ -194,8 +194,9 @@ de:
             update: Zurücksetzen auf gewählte Version
             content: Inhalt
             changes: Änderungen
-            previous: Vorherige Version
+            previous: Vorher
             current: Aktuell
+            compare: Vergleichen
           form:
             select_target_page: Keine Weiterleitung
             preview: Vorschau

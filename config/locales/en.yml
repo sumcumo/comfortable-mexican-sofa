@@ -193,6 +193,7 @@ en:
             changes: Changes
             previous: Previous
             current: Current
+            compare: Compare
           form:
             select_target_page: No Redirect
             preview: Preview

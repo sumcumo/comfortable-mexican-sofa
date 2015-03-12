@@ -14,8 +14,9 @@ class ActionDispatch::Routing::Mapper
               put :reorder,        :on => :collection
               resources :revisions, :only => [:index, :show, :revert, :edit, :update] do
                 patch :revert, :on => :member
+                get :compare, :on => :collection
               end
-              get 'revisions/:id/compare/:second_revision_id', :controller => :revisions, :action => :compare, :as => :compare_revisions
+              # get 'revisions/:id/compare/:second_revision_id', :controller => :revisions, :action => :compare, :as => :compare_revisions
             end
             resources :files do
               put :reorder, :on => :collection
