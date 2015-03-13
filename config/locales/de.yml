@@ -207,6 +207,7 @@ de:
             cancel: Abbrechen
             is_published: Veröffentlicht
             choose_link: Seite auswählen...
+            compare: Vergleichen
           form_blocks:
             no_tags: |-
               Das gewählte Layout hat kein Comfy-Tags deklariert, daher kann diese Seite nicht bearbeitet werden.<br/>
