@@ -253,6 +253,15 @@ de:
             in_categories: in Kategorien
             all: Alle
 
+        tags:
+          page_file:
+            are_you_sure: Sind Sie sicher?
+          page_file_library:
+            select: Auswählen
+            change: Ändern
+            delete: Löschen
+            are_you_sure: Sind Sie sicher?
+
         categories:
           index:
             label: Kategorien
