@@ -130,7 +130,9 @@ de:
             title: Seiten
             new_link: Neue Seite erstellen
           index_branch:
-            toggle: Schalter
+            toggle:
+              open: Ausklappen
+              close: Zuklappen
             add_child_page: Neue, untergeordnete Seite erstellen
             edit: Bearbeiten
             delete: Löschen

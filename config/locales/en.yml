@@ -130,7 +130,9 @@ en:
             title: Pages
             new_link: Create New Page
           index_branch:
-            toggle: Toggle
+            toggle:
+              open: Ausklappen
+              close: Zuklappen
             add_child_page: Add Child Page
             edit: Edit
             delete: Delete
