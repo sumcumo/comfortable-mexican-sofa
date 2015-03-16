@@ -16,7 +16,7 @@ class Comfy::Admin::Cms::PagesController < Comfy::Admin::Cms::BaseController
     if params[:category].present?
       @pages = @site.pages.includes(:categories).for_category(params[:category]).order('label')
     else
-      @pages = [@site.pages.root].compact
+      @pages = [@site.pages.includes(:categories).root].compact
     end
   end
 
@@ -58,6 +58,8 @@ class Comfy::Admin::Cms::PagesController < Comfy::Admin::Cms::BaseController
     s   = (session[:cms_page_tree] ||= [])
     id  = @page.id.to_s
     s.member?(id) ? s.delete(id) : s << id
+    redirect_to :action => :index unless request.xhr?
+    render :text => '' if request.xhr? && params[:silent] == 'true'
   rescue ActiveRecord::RecordNotFound
     # do nothing
   end

@@ -17,6 +17,7 @@ window.CMS.init = ->
   CMS.mirrors()
   CMS.page_update_preview()
   CMS.page_update_publish()
+  CMS.page_tree()
   CMS.compare_revisions()
   CMS.categories()
   CMS.files_filtering()
@@ -135,6 +136,13 @@ window.CMS.page_update_publish = ->
     $('input', widget).prop('checked', $(this).is(':checked'))
   $('button', widget).click ->
     $('input[name=commit]').click()
+
+
+window.CMS.page_tree = ->
+  $('.toggle a', 'ul.list').click (event) ->
+    event.preventDefault()
+    $(this).parents('li:first').toggleClass('open').toggleClass('closed')
+    $.ajax($(this).attr('href'), { data: { "silent": "true" } })
 
 
 window.CMS.compare_revisions = ->
