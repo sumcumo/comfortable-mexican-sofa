@@ -67,6 +67,19 @@ class Comfy::Admin::Cms::RevisionsController < Comfy::Admin::Cms::BaseController
           flash.now[:danger] = I18n.t('comfy.admin.cms.pages.update_failure')
           render :action => :edit
         end
+      elsif params[:withdraw]
+        begin
+          @page.is_published = false
+          @page.revision_data = nil
+          @page.skip_create_revision = true
+          @page.last_published_revision_id = @page.revisions.first.id
+          @page.save!
+          flash[:success] = I18n.t('comfy.admin.cms.pages.updated')
+          redirect_to :controller => :pages, :action => :edit, :id => @page
+        rescue ActiveRecord::RecordInvalid
+          flash.now[:danger] = I18n.t('comfy.admin.cms.pages.update_failure')
+          render :action => :edit
+        end
       else
         if params[:save_as_draft]
           @page.is_published = false

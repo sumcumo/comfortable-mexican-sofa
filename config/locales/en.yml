@@ -203,6 +203,7 @@ en:
             create_and_publish: Create and Publish
             update: Save as Draft
             publish: Publish
+            Withdraw: Withdraw
             cancel: Cancel
             is_published: Published
             choose_link: Select page...

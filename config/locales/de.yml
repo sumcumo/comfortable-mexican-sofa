@@ -206,6 +206,7 @@ de:
             create_and_publish: Speichern und veröffentlichen
             update: Als Entwurf speichern
             publish: Veröffentlichen
+            withdraw: Zurückziehen
             cancel: Abbrechen
             is_published: Veröffentlicht
             choose_link: Seite auswählen...
