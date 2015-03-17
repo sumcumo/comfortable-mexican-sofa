@@ -11,11 +11,13 @@ class Comfy::Admin::Cms::PagesController < Comfy::Admin::Cms::BaseController
 
     return index_for_redactor if params[:source] == 'redactor'
 
-    @pages_by_parent = pages_grouped_by_parent
-
     if params[:category].present?
-      @pages = @site.pages.includes(:categories).for_category(params[:category]).order('label')
+      @pages = @site.pages.includes(:categories).for_category(params[:category]).order(label: :asc)
+      @pages_by_parent = @pages.group_by(&:parent_id)
+      pages_ids = @pages.pluck(:id)
+      @pages = @pages.select{ |page| page.parent == nil || !pages_ids.include?(page.parent_id) }
     else
+      @pages_by_parent = pages_grouped_by_parent
       @pages = [@site.pages.includes(:categories).root].compact
     end
   end
