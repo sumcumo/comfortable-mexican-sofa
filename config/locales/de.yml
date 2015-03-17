@@ -204,8 +204,8 @@ de:
             preview: Vorschau
             create: Seite erstellen
             create_and_publish: Speichern und veröffentlichen
-            update: Als Entwurf speichern
-            publish: Veröffentlichen
+            update: Entwurf speichern
+            publish: Änderungen veröffentlichen
             withdraw: Zurückziehen
             cancel: Abbrechen
             is_published: Veröffentlicht
