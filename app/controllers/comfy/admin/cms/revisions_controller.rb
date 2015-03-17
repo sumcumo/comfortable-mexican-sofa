@@ -53,7 +53,7 @@ class Comfy::Admin::Cms::RevisionsController < Comfy::Admin::Cms::BaseController
 
       # when saving, always create a new revision
       @page.prepare_inverse_revision
-      @page.create_revision
+      @page.create_revision if @page.revision_data
       if params[:publish]
         begin
           @page.is_published = true
@@ -72,7 +72,7 @@ class Comfy::Admin::Cms::RevisionsController < Comfy::Admin::Cms::BaseController
           @page.is_published = false
           @page.revision_data = nil
           @page.skip_create_revision = true
-          @page.last_published_revision_id = @page.revisions.first.id
+          @page.last_published_revision_id = nil
           @page.save!
           flash[:success] = I18n.t('comfy.admin.cms.pages.updated')
           redirect_to :controller => :pages, :action => :edit, :id => @page
