@@ -215,6 +215,7 @@ protected
       response.headers['X-XSS-Protection'] = '0'
 
       render :inline => @page.render, :layout => layout, :content_type => 'text/html'
+      return
     end
   end
 
