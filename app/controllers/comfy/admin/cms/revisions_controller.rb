@@ -50,6 +50,7 @@ class Comfy::Admin::Cms::RevisionsController < Comfy::Admin::Cms::BaseController
     when Comfy::Cms::Page
       load_cms_page
       preview_cms_page
+      return if params[:preview]
 
       # when saving, always create a new revision
       @page.prepare_inverse_revision
@@ -215,7 +216,6 @@ protected
       response.headers['X-XSS-Protection'] = '0'
 
       render :inline => @page.render, :layout => layout, :content_type => 'text/html'
-      return
     end
   end
 
