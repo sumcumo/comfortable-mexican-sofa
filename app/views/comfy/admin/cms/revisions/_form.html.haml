@@ -36,6 +36,8 @@
 
 = render 'form_blocks'
 
+= form.datetime_local_field :scheduled_revision_datetime, label: t('.schedule_date'), control_col: "col-sm-3", class: "status-control", :data => {:utc_date => (@page.scheduled_revision_datetime.nil? ? Time.now : @page.scheduled_revision_datetime) }
+
 = render 'comfy/admin/cms/partials/page_form_after', :form => form
 
 = form.form_group :class => 'form-actions' do
