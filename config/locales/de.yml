@@ -193,7 +193,7 @@ de:
             revision: Version
             full_path: Vollständiger Pfad
             slug: URL
-            update: Zurücksetzen auf gewählte Version
+            update: Zurücksetzen auf vorherige Version
             content: Inhalt
             changes: Änderungen
             previous: Vorher
