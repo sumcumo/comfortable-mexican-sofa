@@ -99,6 +99,7 @@ module ComfortableMexicanSofa::CmsManageable
 
     def clear_content_cache
       write_attribute(:content_cache, nil) if self.has_attribute?(:content_cache)
+      write_attribute(:updated_at, Time.now) if self.has_attribute?(:updated_at)
     end
   end
 end
