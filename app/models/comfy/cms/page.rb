@@ -77,13 +77,14 @@ class Comfy::Cms::Page < ActiveRecord::Base
   end
 
   def state
+    return 'withdrawn' if self.is_withdrawn?
     self.is_published? ? 'published' : 'draft'
   end
 
 protected
 
   def assigns_label
-    self.label = self.label.blank?? self.slug.try(:titleize) : self.label
+    self.label = self.label.blank? ? self.slug.try(:titleize) : self.label
   end
 
   def assign_parent

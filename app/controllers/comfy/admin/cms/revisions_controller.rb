@@ -52,12 +52,13 @@ class Comfy::Admin::Cms::RevisionsController < Comfy::Admin::Cms::BaseController
       preview_cms_page
       return if params[:preview]
 
-      # when saving, always create a new revision
+      # when saving, create a new revision
       @page.prepare_inverse_revision
       @page.create_revision if @page.revision_data
       if params[:publish]
         begin
           @page.is_published = true
+          @page.is_withdrawn = false
           @page.revision_data = nil
           @page.skip_create_revision = true
           @page.last_published_revision_id = @page.revisions.first.id
@@ -71,6 +72,7 @@ class Comfy::Admin::Cms::RevisionsController < Comfy::Admin::Cms::BaseController
       elsif params[:withdraw]
         begin
           @page.is_published = false
+          @page.is_withdrawn = true
           @page.revision_data = nil
           @page.skip_create_revision = true
           @page.last_published_revision_id = nil
@@ -84,6 +86,7 @@ class Comfy::Admin::Cms::RevisionsController < Comfy::Admin::Cms::BaseController
       else
         if params[:save_as_draft]
           @page.is_published = false
+          @page.is_withdrawn = false
         end
         begin
           flash[:success] = I18n.t('comfy.admin.cms.pages.updated')
