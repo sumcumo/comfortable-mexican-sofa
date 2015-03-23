@@ -57,12 +57,16 @@ class Comfy::Admin::Cms::RevisionsController < Comfy::Admin::Cms::BaseController
       @page.create_revision if @page.revision_data
       if params[:publish]
         begin
-          @page.is_published = true
-          @page.is_withdrawn = false
-          @page.revision_data = nil
-          @page.skip_create_revision = true
-          @page.last_published_revision_id = @page.revisions.first.id
-          @page.save!
+          if params[:scheduled_revision_datetime] > Time.now
+            @page.update_columns(scheduled_revision_datetime: params[:scheduled_revision_datetime], scheduled_revision_id: @page.revisions.first.id)
+          else
+            @page.last_published_revision_id = @page.revisions.first.id
+            @page.is_published = true
+            @page.is_withdrawn = false
+            @page.revision_data = nil
+            @page.skip_create_revision = true
+            @page.save!
+          end
           flash[:success] = I18n.t('comfy.admin.cms.pages.updated')
           redirect_to :controller => :pages, :action => :edit, :id => @page
         rescue ActiveRecord::RecordInvalid
