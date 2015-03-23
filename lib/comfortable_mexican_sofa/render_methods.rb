@@ -46,7 +46,7 @@ module ComfortableMexicanSofa::RenderMethods
 
       if (page_path = options.delete(:cms_page)) || (layout_identifier = options.delete(:cms_layout))
         unless @cms_site ||= Comfy::Cms::Site.find_site(request.host_with_port.downcase, request.fullpath)
-          raise ComfortableMexicanSofa::MissingSite.new("#{request.host.downcase}/#{request.fullpath}")
+          raise ComfortableMexicanSofa::MissingSite.new("#{request.host_with_port.downcase}/#{request.fullpath}")
         end
       end
 
