@@ -133,6 +133,7 @@ de:
             toggle:
               open: Ausklappen
               close: Zuklappen
+            newer_draft_available: Neuerer Entwurf
             add_child_page: Neue, untergeordnete Seite erstellen
             edit: Bearbeiten
             delete: Löschen

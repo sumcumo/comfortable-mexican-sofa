@@ -4,6 +4,7 @@
 //= depend_on_asset "comfy/admin/cms/arrow_bottom.gif"
 //= depend_on_asset "comfy/admin/cms/arrow_right.gif"
 //= depend_on_asset "comfy/admin/cms/icon_draft.gif"
+//= depend_on_asset "comfy/admin/cms/icon_withdrawn.gif"
 //= depend_on_asset "comfy/admin/cms/icon_site.gif"
 //= depend_on_asset "comfy/admin/cms/icon_layout.gif"
 //= depend_on_asset "comfy/admin/cms/icon_snippet.gif"
@@ -124,6 +125,10 @@ body#comfy
           display: none
       &:hover .dragger
         display: block
+      .icon-state-draft
+      .icon-state-published
+      .icon-state-withdrawn
+      .icon-has-newer-draft
     div.category
       display: inline-block
       vertical-align: top
@@ -143,6 +148,13 @@ body#comfy
   .item-meta
     font-size: 11px
     line-height: 14px
+  .item-newer-draft
+    display: inline-block
+    font-size: 11px
+    color: #fff
+    background-color: #5bc0de
+    padding: 2px 5px
+    border-radius: 3px
 
   .cms-partial
     background-color: #252525
