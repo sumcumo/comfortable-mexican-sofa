@@ -56,6 +56,8 @@ protected
   end
 
   def check_scheduled
+    # in case the page was not published yet, @cms_page will be nil
+    @cms_page ||= @cms_site.pages.find_by_full_path!("/#{params[:cms_path]}")
     return if @cms_page.scheduled_revision_id.nil? || @cms_page.scheduled_revision_datetime.nil?
     if @cms_page.scheduled_revision_id != @cms_page.last_published_revision_id && @cms_page.scheduled_revision_datetime <= Time.now
       @revision = @cms_page.revisions.find(@cms_page.scheduled_revision_id)
