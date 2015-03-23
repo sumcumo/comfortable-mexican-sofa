@@ -81,6 +81,10 @@ class Comfy::Cms::Page < ActiveRecord::Base
     self.is_published? ? 'published' : 'draft'
   end
 
+  def has_newer_draft?
+    !self.newest_draft_timestamp.nil? && self.newest_draft_timestamp > self.updated_at
+  end
+
 protected
 
   def assigns_label
