@@ -198,8 +198,45 @@ body#comfy
       color: #777
       line-height: 20px
       padding: 5px 0
-    .categories-filter-widget .categories.list
-      padding: 7px 0 0 0
+    .categories-filter-widget, .categories-edit-widget
+      .categories.list, .categories.editable
+        padding: 7px 0 0 0
+      .action-links
+        float: right
+        margin-left: 10px
+        margin-top: 4px
+        .done
+          display: none
+    .categories-edit-widget
+      display: none
+      .categories
+        overflow: hidden
+        // margin: 0px 50px 0px 110px
+        .category
+          display: inline-block
+          vertical-align: top
+          font-size: 11px
+          line-height: 11px
+          border: 1px solid #ddd
+          padding: 2px 5px
+          background-color: #fff
+          border-radius: 3px
+          border-left-width: 7px
+          &.active
+            border-color: #a5a5a5
+        form
+          display: inline-block
+          vertical-align: middle
+          margin: 0
+          .input-group
+            display: inline-block
+            input.form-control
+              width: 125px
+              height: 22px
+              padding: 3px
+              font-size: 11px
+              line-height: 11px
+
 
   // -- Categories Widget ---------------------------------------------------
   .categories-widget

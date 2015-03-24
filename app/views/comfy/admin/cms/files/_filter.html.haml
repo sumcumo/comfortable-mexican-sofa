@@ -14,30 +14,25 @@
     .categories-filter-widget
       .categories-filter-widget-label= t('.in_categories')
       
+      .action-links
+        .edit= link_to t('.edit'), '#', :class => 'btn btn-default btn-xs'
+
       %ul.categories.list
         = select_tag "category", options_from_collection_for_select(@site.categories.of_type(type), 'label', 'label', selected: params[:category]), multiple: true, class: 'hidden'
         .category.all{:class => params[:category].blank? ? 'active' : nil}
           %a#js-all-categories(href="#")= t('.all')
         - @site.categories.of_type(type).each do |category|
           = render :partial => 'comfy/admin/cms/categories/show', :object => category, :locals => { :read => true }
-        /
-          .category.all{:class => params[:category].blank? ? 'active' : nil}
-            = link_to t('.all'), :category => nil, :id => 'js-all-categories'
-          - @site.categories.of_type(type).each do |category|
-            = render :partial => 'comfy/admin/cms/categories/show', :object => category, :locals => { :read => true }
 
-  /
+  .categories-edit-widget
+    .categories-filter-widget-label= t('.in_categories')
+      
     .action-links
-      .edit= link_to t('.edit'), '#', :class => 'btn btn-default btn-xs'
       .done= link_to t('.done'), '#', :class => 'btn btn-default btn-xs'
-    
-    .categories.read
-      .category.all{:class => params[:category].blank?? 'active' : nil}
-        = link_to t('.all'), :category => nil
-      - @site.categories.of_type(type).each do |category|
-        = render :partial => 'comfy/admin/cms/categories/show', :object => category, :locals => { :read => true }
-    
+
     .categories.editable
+      .category.all
+        %a#js-all-categories(href="#")= t('.all')
       - @site.categories.of_type(type).each do |category|
         = render :partial => 'comfy/admin/cms/categories/show', :object => category
       

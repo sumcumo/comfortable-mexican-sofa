@@ -187,6 +187,13 @@ window.CMS.files_filtering = ->
     $('.categories.list div', '.categories-filter-widget').removeClass('active')
     $('#js-all-categories').parent().toggleClass('active', $('select#category').val() == null)
 
+  $('a', '.library-filter-widget .action-links').click (event) ->
+    event.preventDefault()
+    $('.categories-filter-widget').toggle()
+    $('.categories-edit-widget').toggle()
+    $('.edit', '.categories-filter-widget').toggle()
+    $('.done', '.categories-edit-widget').toggle()
+
 
 # If we are inside an iframe remove the columns and just keep the center column content.
 # This is used for the files widget that opens in a modal window.

@@ -251,6 +251,12 @@ en:
             reset: Reset
             in_categories: in categories
             all: All
+            label: Categories
+            edit: Edit Categories
+            done: Done
+            all: All
+            add: Add
+            add_placeholder: Add Category
 
         tags:
           page_file:

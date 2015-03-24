@@ -256,6 +256,12 @@ de:
             reset: Löschen
             in_categories: in Kategorien
             all: Alle
+            label: Kategorien
+            edit: Kategorien bearbeiten
+            done: Fertig
+            all: Alle
+            add: Hinzufügen
+            add_placeholder: Neue Kategorie
 
         tags:
           page_file:
