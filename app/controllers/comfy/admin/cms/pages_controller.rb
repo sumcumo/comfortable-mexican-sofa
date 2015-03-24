@@ -11,6 +11,8 @@ class Comfy::Admin::Cms::PagesController < Comfy::Admin::Cms::BaseController
 
     return index_for_redactor if params[:source] == 'redactor'
 
+    session[:cms_page_viewstate] = params
+
     if params[:category].present?
       @pages = @site.pages.includes(:categories).for_category(params[:category]).order(label: :asc)
       @pages_by_parent = @pages.group_by(&:parent_id)
