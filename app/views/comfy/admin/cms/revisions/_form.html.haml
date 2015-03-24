@@ -46,4 +46,4 @@
   = form.submit t(@page.new_record? ? '.create_and_publish' : '.publish'), :name => 'publish', :class => 'btn btn-success'
   - unless @page.new_record? || !@page.is_published
     = form.submit t('.withdraw'), :name => 'withdraw', :class => 'btn btn-default'
-  = link_to t('.cancel'), comfy_admin_cms_site_pages_path, :class => 'btn btn-link'
+  = link_to t('.cancel'), comfy_admin_cms_site_pages_path(session[:cms_page_viewstate] || {}), :class => 'btn btn-link'
