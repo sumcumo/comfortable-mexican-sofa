@@ -58,7 +58,7 @@ class Comfy::Admin::Cms::RevisionsController < Comfy::Admin::Cms::BaseController
       @page.update_column(:newest_draft_timestamp, @page.revisions.first.created_at)
       if params[:publish]
         begin
-          if params[:scheduled_revision_datetime] > Time.now
+          if params[:scheduled_revision_datetime] && params[:scheduled_revision_datetime] > Time.now
             @page.update_columns(scheduled_revision_datetime: params[:scheduled_revision_datetime], scheduled_revision_id: @page.revisions.first.id)
           else
             @page.last_published_revision_id = @page.revisions.first.id
