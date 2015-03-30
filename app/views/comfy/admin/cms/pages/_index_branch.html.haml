@@ -7,7 +7,7 @@
 - category_view = params[:category].present?
 
 %li{:id => dom_id(page), :class => [branch_open ? 'open' : 'closed'].compact}
-  .item{:class => [page.state, page.is_published? && page.has_newer_draft? ? 'newer-draft' : nil].compact}
+  .item{:class => [page.state, page.is_published? && page.has_newer_draft? ? 'newer-draft' : nil, page.is_published? && page.children_have_newer_drafts? ? 'newer-drafts-in-children' : nil].compact}
     .toggle
       - if has_children && !page.root?
         = link_to toggle_branch_comfy_admin_cms_site_page_path(@site, page) do
@@ -31,6 +31,8 @@
         = link_to page.label, edit_comfy_admin_cms_site_page_path(@site, page), :class => 'item-label'
         - if page.is_published? && page.has_newer_draft?
           .item-newer-draft= t('.newer_draft_available')
+        - if page.is_published? && page.children_have_newer_drafts?
+          .item-newer-drafts-in-children= t('.newer_drafts_in_children')
         = render :partial => 'comfy/admin/cms/categories/categories', :object => page
       .item-meta
         = link_to page.url, page.url, :target => '_blank'

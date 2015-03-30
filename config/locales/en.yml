@@ -134,6 +134,7 @@ en:
               open: Ausklappen
               close: Zuklappen
             newer_draft_available: Newer Draft
+            newer_drafts_in_children: Newer Drafts for Children
             add_child_page: Add Child Page
             edit: Edit
             delete: Delete

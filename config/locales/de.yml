@@ -55,7 +55,7 @@ de:
 
           sites: Webs
           layouts: Layouts
-          pages: Seiten
+          f: Seiten
           snippets: Schnipsel
           files: Dateien
 
@@ -134,6 +134,7 @@ de:
               open: Ausklappen
               close: Zuklappen
             newer_draft_available: Neuerer Entwurf
+            newer_drafts_in_children: Neuere Entwürfe für Unterseiten
             add_child_page: Neue, untergeordnete Seite erstellen
             edit: Bearbeiten
             delete: Löschen

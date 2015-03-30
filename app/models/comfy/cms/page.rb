@@ -85,6 +85,12 @@ class Comfy::Cms::Page < ActiveRecord::Base
     !self.newest_draft_timestamp.nil? && self.newest_draft_timestamp > self.updated_at
   end
 
+  def children_have_newer_drafts?
+    self.children.any? do |child|
+      !child.newest_draft_timestamp.nil? && child.newest_draft_timestamp > child.updated_at
+    end
+  end
+
 protected
 
   def assigns_label
