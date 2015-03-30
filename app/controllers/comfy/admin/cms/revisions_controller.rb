@@ -69,7 +69,7 @@ class Comfy::Admin::Cms::RevisionsController < Comfy::Admin::Cms::BaseController
             @page.save!
           end
           flash[:success] = I18n.t('comfy.admin.cms.pages.updated')
-          redirect_to :controller => :pages, :action => :edit, :id => @page
+          redirect_to :action => :edit, :page_id => @page, :id => @page.revisions.first
         rescue ActiveRecord::RecordInvalid
           flash.now[:danger] = I18n.t('comfy.admin.cms.pages.update_failure')
           render :action => :edit
@@ -83,7 +83,7 @@ class Comfy::Admin::Cms::RevisionsController < Comfy::Admin::Cms::BaseController
           @page.last_published_revision_id = nil
           @page.save!
           flash[:success] = I18n.t('comfy.admin.cms.pages.updated')
-          redirect_to :controller => :pages, :action => :edit, :id => @page
+          redirect_to :action => :edit, :page_id => @page, :id => @page.revisions.first
         rescue ActiveRecord::RecordInvalid
           flash.now[:danger] = I18n.t('comfy.admin.cms.pages.update_failure')
           render :action => :edit
