@@ -48,14 +48,23 @@ class Comfy::Admin::Cms::RevisionsController < Comfy::Admin::Cms::BaseController
   def update
     case @record
     when Comfy::Cms::Page
-      load_cms_page
+      #load_cms_page
+      load_from_revision
       preview_cms_page
       return if params[:preview]
+
+      ## XXX something like this might make block revisions work for files etc.?
+      # tags = @page.tags(true).select{|t| t.is_cms_block?}.uniq{|t| t.identifier}
+      # file_blocks_ids = tags.select{ |t| t.respond_to? :file }.map(&:identifier)
+      # file_blocks = @page.blocks.select{ |p| file_blocks_ids.include? p.identifier }
+      # file_blocks.each do |block|
+      #   block.update_attributes(page_params["blocks_attributes"].find{ |k,p| p["identifier"] == block.identifier }[1])
+      # end
 
       # when saving, create a new revision
       @page.prepare_inverse_revision
       @page.create_revision if @page.revision_data
-      @page.update_column(:newest_draft_timestamp, @page.revisions.first.created_at)
+      @page.update_column(:newest_draft_timestamp, @page.revisions.first.created_at) if @page.revision_data
       if params[:publish]
         begin
           if params[:scheduled_revision_datetime] && params[:scheduled_revision_datetime] > Time.now
@@ -203,10 +212,12 @@ protected
 
   def load_from_revision
     @page = @site.pages.find(params[:page_id])
-    @page.attributes = page_params
     @page.layout ||= (@page.parent && @page.parent.layout || @site.layouts.first)
     revision = @page.revisions.find(params[:id])
     revision.data.map { |k,v| @page.send("#{k}=", v) }
+    @page.blocks.each{ |block| block.send(:changes_applied) }
+    @page.blocks_attributes_changed = false
+    @page.attributes = page_params
     # page = @page.blocks.inject({}){|c, b| c[b.identifier] = revision.data['blocks_attributes'].detect{|r| r[:identifier] == b.identifier}.try(:[], :content); c }
   rescue ActiveRecord::RecordNotFound
     flash[:danger] = I18n.t('comfy.admin.cms.pages.not_found')
