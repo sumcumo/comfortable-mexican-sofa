@@ -32,6 +32,7 @@ class Comfy::Admin::Cms::PagesController < Comfy::Admin::Cms::BaseController
     if @page.revisions.size == 0
       @page.prepare_inverse_revision!
       @page.create_revision
+      @page.update_column(:last_published_revision_id, @page.revisions.first.id)
     end
     redirect_to edit_comfy_admin_cms_site_page_revision_path(@site, @page, @page.revisions.first)
   end
