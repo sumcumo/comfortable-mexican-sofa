@@ -215,10 +215,9 @@ protected
     @page.layout ||= (@page.parent && @page.parent.layout || @site.layouts.first)
     revision = @page.revisions.find(params[:id])
     revision.data.map { |k,v| @page.send("#{k}=", v) }
-    @page.blocks.each{ |block| block.send(:changes_applied) }
+    @page.blocks.each{ |block| block.send(:changes_applied) if block.changed? }
     @page.blocks_attributes_changed = false
     @page.attributes = page_params
-    # page = @page.blocks.inject({}){|c, b| c[b.identifier] = revision.data['blocks_attributes'].detect{|r| r[:identifier] == b.identifier}.try(:[], :content); c }
   rescue ActiveRecord::RecordNotFound
     flash[:danger] = I18n.t('comfy.admin.cms.pages.not_found')
     redirect_to :action => :index
