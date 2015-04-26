@@ -13,11 +13,11 @@ class Comfy::Admin::Cms::PagesController < Comfy::Admin::Cms::BaseController
     session[:cms_page_viewstate] = params
 
     pages_scope = @site.pages
-      .includes(:categories)
+      .includes(:categories, :blocks)
       .for_category(params[:category])
       .order(label: :asc)
 
-    pages_scope = pages_scope.where('comfy_cms_pages.label LIKE ?', "%#{params[:q]}%") if params[:q].present?
+    pages_scope = pages_scope.where('comfy_cms_pages.label LIKE ? OR comfy_cms_pages.slug LIKE ? OR comfy_cms_pages.full_path LIKE ?', "%#{params[:q]}%", "%#{params[:q]}%", "%#{params[:q]}%") if params[:q].present?
     pages_ids   = pages_scope.pluck(:id)
 
     @pages_by_parent  = pages_scope.group_by(&:parent_id)
