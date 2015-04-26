@@ -160,6 +160,20 @@ de:
               Das gewählte Layout hat kein Comfy-Tags deklariert, daher kann diese Seite nicht bearbeitet werden.<br/>
               Beispiel: <code>{{ cms:page:content }}</code>
 
+          filter: &filter
+            search_term: Suche nach
+            search_placeholder: Suchbegriff
+            search: Suchen
+            reset: Alles zeigen!
+            in_categories: in Kategorien
+            all: Alle
+            label: Kategorien
+            edit: Kategorien bearbeiten
+            done: Fertig
+            all: Alle
+            add: Hinzufügen
+            add_placeholder: Neue Kategorie
+
         snippets:
           created: Schnipsel erstellt
           creation_failure: Fehler beim Erstellen des Schnipsels!
@@ -250,19 +264,7 @@ de:
             are_you_sure: Sind Sie sicher?
             edit: Datei bearbeiten
             delete: Datei löschen
-          filter:
-            search_term: Suche nach
-            search_placeholder: Suchbegriff
-            search: Suchen
-            reset: Löschen
-            in_categories: in Kategorien
-            all: Alle
-            label: Kategorien
-            edit: Kategorien bearbeiten
-            done: Fertig
-            all: Alle
-            add: Hinzufügen
-            add_placeholder: Neue Kategorie
+          filter: *filter
 
         tags:
           page_file:

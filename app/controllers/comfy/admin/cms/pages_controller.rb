@@ -8,20 +8,20 @@ class Comfy::Admin::Cms::PagesController < Comfy::Admin::Cms::BaseController
 
   def index
     return redirect_to :action => :new if site_has_no_pages?
-
     return index_for_redactor if params[:source] == 'redactor'
 
     session[:cms_page_viewstate] = params
 
-    if params[:category].present?
-      @pages = @site.pages.includes(:categories).for_category(params[:category]).order(label: :asc)
-      @pages_by_parent = @pages.group_by(&:parent_id)
-      pages_ids = @pages.pluck(:id)
-      @pages = @pages.select{ |page| page.parent == nil || !pages_ids.include?(page.parent_id) }
-    else
-      @pages_by_parent = pages_grouped_by_parent
-      @pages = [@site.pages.includes(:categories).root].compact
-    end
+    pages_scope = @site.pages
+      .includes(:categories)
+      .for_category(params[:category])
+      .order(label: :asc)
+
+    pages_scope = pages_scope.where('comfy_cms_pages.label LIKE ?', "%#{params[:q]}%") if params[:q].present?
+    pages_ids   = pages_scope.pluck(:id)
+
+    @pages_by_parent  = pages_scope.group_by(&:parent_id)
+    @pages            = pages_scope.select{ |page| page.parent == nil || !pages_ids.include?(page.parent_id) }
   end
 
   def new
