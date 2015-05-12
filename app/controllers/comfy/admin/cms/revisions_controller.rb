@@ -98,11 +98,14 @@ class Comfy::Admin::Cms::RevisionsController < Comfy::Admin::Cms::BaseController
           render :action => :edit
         end
       else
-        if params[:save_as_draft]
-          @page.is_published = false
-          @page.is_withdrawn = false
-        end
         begin
+          if params[:save_as_draft]
+            @page.is_published = false
+            @page.is_withdrawn = false
+          end
+          @page.category_ids = params[:page][:category_ids]
+          @page.sync_categories
+
           flash[:success] = I18n.t('comfy.admin.cms.pages.updated')
           redirect_to :action => :edit, :page_id => @page, :id => @page.revisions.first
         rescue ActiveRecord::RecordInvalid
