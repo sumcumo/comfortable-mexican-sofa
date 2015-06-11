@@ -154,11 +154,10 @@ window.CMS.mirrors = ->
 
 
 window.CMS.page_update_preview = ->
-  $('input[name=commit]').click ->
+  $('input[name=commit], input[name=save], input[name=publish]').click ->
     $(this).parents('form').attr('target', '')
   $('input[name=preview]').click ->
     $(this).parents('form').attr('target', 'comfy-cms-preview')
-
 
 window.CMS.page_update_publish = ->
   widget = $('#form-save')
