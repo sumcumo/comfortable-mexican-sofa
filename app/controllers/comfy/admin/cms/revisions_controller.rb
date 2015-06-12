@@ -99,9 +99,10 @@ class Comfy::Admin::Cms::RevisionsController < Comfy::Admin::Cms::BaseController
         end
       else
         begin
-          if params[:save_as_draft]
-            @page.is_published = false
-            @page.is_withdrawn = false
+          if params[:save]
+            if params[:scheduled_revision_datetime] && params[:scheduled_revision_datetime] > Time.now
+              @page.update_columns(scheduled_revision_datetime: params[:scheduled_revision_datetime], scheduled_revision_id: @page.revisions.first.id)
+            end
           end
           @page.category_ids = params[:page][:category_ids]
           @page.sync_categories
