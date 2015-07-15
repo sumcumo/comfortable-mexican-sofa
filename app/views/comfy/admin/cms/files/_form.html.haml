@@ -16,8 +16,14 @@
 
 = render 'comfy/admin/cms/partials/file_form_after', :form => form
 
+- back_to_page = params[:page_id].present? && params[:revision_id].present?
+- if back_to_page
+  = hidden_field_tag 'page_id', params[:page_id]
+  = hidden_field_tag 'revision_id', params[:revision_id]
+
 = form.form_group :class => 'form-actions' do
   = form.submit t(@file.new_record?? '.create' : '.update'), :class => 'btn btn-primary'
   - unless @file.new_record?
-    = link_to t('.delete'), comfy_admin_cms_site_file_path(@site, @file), :method => :delete, :data => {:confirm => t('.are_you_sure')},  :class => 'btn btn-danger'
-  = link_to t('.cancel'), comfy_admin_cms_site_files_path, :class => 'btn btn-link'
+    = link_to t('.delete'), comfy_admin_cms_site_file_path(@site, @file, back_to_page ? {page_id: params[:page_id], revision_id: params[:revision_id]} : {}), :method => :delete, :data => {:confirm => t('.are_you_sure')}, :class => 'btn btn-danger'
+  
+  = link_to t('.cancel'), back_to_page ? edit_comfy_admin_cms_site_page_revision_path(params[:site_id].to_i, params[:page_id].to_i, params[:revision_id].to_i) : comfy_admin_cms_site_files_path, :class => 'btn btn-link'

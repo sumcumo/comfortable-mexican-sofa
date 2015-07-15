@@ -64,7 +64,11 @@ class Comfy::Admin::Cms::FilesController < Comfy::Admin::Cms::BaseController
   def update
     if @file.update(file_params)
       flash[:success] = I18n.t('comfy.admin.cms.files.updated')
-      redirect_to :action => :index
+      if params.has_key?(:page_id) && params.has_key?(:revision_id)
+        redirect_to edit_comfy_admin_cms_site_page_revision_path(params[:site_id].to_i, params[:page_id].to_i, params[:revision_id].to_i)
+      else
+        redirect_to :action => :index
+      end
     else
       flash.now[:danger] = I18n.t('comfy.admin.cms.files.update_failure')
       render :action => :edit
@@ -77,7 +81,11 @@ class Comfy::Admin::Cms::FilesController < Comfy::Admin::Cms::BaseController
       format.js
       format.html do
         flash[:success] = I18n.t('comfy.admin.cms.files.deleted')
-        redirect_to :action => :index
+        if params.has_key?(:page_id) && params.has_key?(:revision_id)
+          redirect_to edit_comfy_admin_cms_site_page_revision_path(params[:site_id].to_i, params[:page_id].to_i, params[:revision_id].to_i)
+        else
+          redirect_to :action => :index
+        end
       end
     end
   end

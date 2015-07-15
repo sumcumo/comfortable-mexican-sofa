@@ -7,6 +7,6 @@
             = image_tag file.url(:cms_thumb)
           - else
             = image_tag 'comfy/admin/cms/icon_page.gif'
-        .file-label= file.label
+        .file-label= link_to file.label, edit_comfy_admin_cms_site_file_path(@site, file, {page_id: params[:page_id], revision_id: params[:id]})
         %br
         = link_to 'Delete', comfy_admin_cms_site_file_path(@site, file), method: :delete, remote: true, data: { confirm: t('.are_you_sure') }, class: 'delete btn btn-danger btn-xs'
