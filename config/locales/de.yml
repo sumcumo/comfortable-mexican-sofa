@@ -267,6 +267,8 @@ de:
 
         tags:
           page_file:
+            delete: Löschen
+            change: Bearbeiten
             are_you_sure: Sind Sie sicher?
           page_file_library:
             select: Auswählen

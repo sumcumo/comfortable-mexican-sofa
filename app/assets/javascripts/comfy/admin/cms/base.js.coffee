@@ -122,7 +122,8 @@ window.CMS.sortable_list = ->
     handle: 'div.dragger'
     axis:   'y'
     update: ->
-      $.post("#{CMS.current_path}/reorder", "_method=put&#{$(this).sortable('serialize')}")
+      path = if $(this).data('path') then $(this).data('path') else "#{CMS.current_path}/reorder"
+      $.post(path, "_method=put&#{$(this).sortable('serialize')}")
 
 
 window.CMS.timepicker = ->

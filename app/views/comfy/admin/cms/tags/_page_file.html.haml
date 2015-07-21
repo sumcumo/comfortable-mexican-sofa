@@ -1,12 +1,15 @@
 - if (files = block.files).present?
-  .page-files
+  .page-files.sortable{data: {path: "#{reorder_comfy_admin_cms_site_files_path(@site)}"}}
     - files.each do |file|
       .page-file{ id: dom_id(file) }
+        .file-label= file.label
         = link_to file.url, target: '_blank', class: 'thumbnail' do
           - if file.is_image?
             = image_tag file.url(:cms_thumb)
           - else
             = image_tag 'comfy/admin/cms/icon_page.gif'
-        .file-label= link_to file.label, edit_comfy_admin_cms_site_file_path(@site, file, {page_id: params[:page_id], revision_id: params[:id]})
-        %br
-        = link_to 'Delete', comfy_admin_cms_site_file_path(@site, file), method: :delete, remote: true, data: { confirm: t('.are_you_sure') }, class: 'delete btn btn-danger btn-xs'
+        - if files.count > 1
+          .dragger
+        .options
+          = link_to t('.delete'), comfy_admin_cms_site_file_path(@site, file), method: :delete, remote: true, data: { confirm: t('.are_you_sure') }, class: 'delete btn btn-danger btn-xs'
+          = link_to t('.change'), edit_comfy_admin_cms_site_file_path(@site, file, {page_id: params[:page_id], revision_id: params[:id]}), class: 'delete btn btn-info btn-xs'
