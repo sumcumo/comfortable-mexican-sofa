@@ -1,0 +1,18 @@
+- hierarchy_array = Comfy::Cms::Variant.all.map { |h| [h.hierarchy, h.id] }
+- maximum = Comfy::Cms::Variant.any? ? Comfy::Cms::Variant.maximum(:hierarchy) + 1 : 1
+- hierarchy_array << [ maximum, maximum ]
+- selected = @variant.new_record? ? maximum : @variant.hierarchy
+
+= render 'comfy/admin/cms/partials/variant_form_before', :form => form
+= form.text_field :label
+= form.text_field :hostname
+= form.select :hierarchy, options_for_select(hierarchy_array, selected)
+= form.form_group do
+  = form.check_box :is_default, :label => t('.is_default')
+
+= render 'comfy/admin/cms/categories/form', :form => form
+= render 'comfy/admin/cms/partials/variant_form_after', :form => form
+
+= form.form_group :class => 'form-actions' do
+  = form.submit t(@variant.new_record?? '.create' : '.update'), :class => 'btn btn-primary'
+  = link_to t('.cancel'), comfy_admin_cms_site_variants_path, :class => 'btn btn-link'

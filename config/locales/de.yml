@@ -7,6 +7,7 @@ de:
       comfy/cms/page: Seite
       comfy/cms/snippet: Schnipsel
       comfy/cms/file: Datei
+      comfy/cms/variant: Variante
 
     attributes:
       comfy/cms/site:
@@ -41,6 +42,10 @@ de:
         identifier: Eindeutiger Name
         label: Bezeichnung
         content: Inhalt
+      comfy/cms/variant:
+        label: Bezeichnung
+        hierarchy: Hierarchie
+        hostname: Host-URL
 
   comfy:
     cms:
@@ -290,3 +295,39 @@ de:
             save: Kategorie speichern
           form:
             label: Kategorien
+
+        variants:
+          title: Seiten-Varianten
+          created: Seiten-Variante wurde erfolgreich erstellt
+          creation_failure: Beim Erstellen der Seiten-Variante ist ein Fehler aufgetreten
+          updated: Die Seiten-Variante wurde aktualisiert
+          updated_failure: Beim Aktualisieren der Seiten-Variante ist ein Fehler aufgetreten
+          deleted: Die Seiten-Variante wurde gelöscht
+          not_found: Die Seiten-Variante konnte nicht gefunden werden
+
+          index:
+            title: Seiten-Varianten
+            new_link: Neue Seiten-Variante erstellen
+            delete: Löschen
+            edit: Bearbeiten
+            are_you_sure: Sind Sie sicher?
+          new:
+            title: Seiten-Variante erstellen
+          form:
+            create: Seiten-Variante erstellen
+            cancel: Abbrechen
+            update: Seiten-Variante aktualisieren
+            is_default: Ist die Standard-Variante
+
+          edit:
+            title: Seiten-Variante bearbeiten
+
+        partials:
+          variant_form_before:
+            info_html: |
+              <p>Seiten-Varianten sind ein anderes Konzept zu Webseiten. Hier werden Varianten für eine Seite definiert. Die
+              Identifikation welche Variante der Seite genutzt werden soll, erfolgt über das "scannen" der Host-URL. In
+              der Host-URL steht also z.B. <i>m.lotto-niedersachsen.de</i> oder <i>www.lotto-niedersachsen.de</i>.</p>
+              <br>
+              <p>In der Editier-Ansicht einer Seite werden je nach Hierarchie aufsteigend Tabs angezeigt, die jeweils die
+              Inhalts-Felder für diese Seiten-Variante beinhalten.</p>

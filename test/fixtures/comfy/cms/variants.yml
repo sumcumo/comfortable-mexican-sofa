@@ -1,0 +1,5 @@
+default:
+  label: Default Vaiant
+  hostname: test.host
+  hierarchy: 1
+  is_default: 1

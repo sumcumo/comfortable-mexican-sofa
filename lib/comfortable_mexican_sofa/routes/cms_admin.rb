@@ -34,6 +34,7 @@ class ActionDispatch::Routing::Mapper
               end
             end
             resources :categories
+            resources :variants
           end
         end
       end
