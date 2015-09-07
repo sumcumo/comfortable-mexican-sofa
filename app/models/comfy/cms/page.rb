@@ -14,6 +14,7 @@ class Comfy::Cms::Page < ActiveRecord::Base
   belongs_to :layout
   belongs_to :target_page,
     :class_name => 'Comfy::Cms::Page'
+  belongs_to :variant
 
   # -- Callbacks ------------------------------------------------------------
   before_validation :assigns_label,
@@ -31,7 +32,7 @@ class Comfy::Cms::Page < ActiveRecord::Base
     :presence   => true
   validates :slug,
     :presence   => true,
-    :uniqueness => { :scope => :parent_id },
+    :uniqueness => { :scope => :variant_id },
     :unless     => lambda{ |p| p.site && (p.site.pages.count == 0 || p.site.pages.root == self) }
   validates :layout,
     :presence   => true

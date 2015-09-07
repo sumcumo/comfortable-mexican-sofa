@@ -134,6 +134,13 @@ class Comfy::Admin::Cms::RevisionsController < Comfy::Admin::Cms::BaseController
     # xxx
   end
 
+  def page_variant
+    check_for_layouts
+    load_from_revision
+    
+    #@page = @site.pages.where(id: params[:id], variant_id: params[:page_variant]).first
+  end
+
 protected
 
   def load_record
@@ -222,6 +229,7 @@ protected
     @page.blocks.each{ |block| block.send(:changes_applied) if block.changed? }
     @page.blocks_attributes_changed = false
     @page.attributes = page_params
+    @variants = @site.variants.order(hierarchy:  'ASC')
   rescue ActiveRecord::RecordNotFound
     flash[:danger] = I18n.t('comfy.admin.cms.pages.not_found')
     redirect_to :action => :index

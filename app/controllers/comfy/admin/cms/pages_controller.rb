@@ -42,7 +42,11 @@ class Comfy::Admin::Cms::PagesController < Comfy::Admin::Cms::BaseController
   end
 
   def create
-    @page.save!
+    @site.variants.each do |variant|
+      @page = @page.dup
+      @page.variant_id = variant.id
+      @page.save!
+    end
     flash[:success] = I18n.t('comfy.admin.cms.pages.created')
     redirect_to :action => :edit, :id => @page
   rescue ActiveRecord::RecordInvalid
@@ -78,6 +82,11 @@ class Comfy::Admin::Cms::PagesController < Comfy::Admin::Cms::BaseController
       ::Comfy::Cms::Page.where(:id => id).update_all(:position => index)
     end
     render :nothing => true
+  end
+
+  def page_variant
+    return unless params[:id]
+    @page = @site.pages.where(id: params[:id], variant_id: params[:page_variant]).first
   end
 
 protected
@@ -120,12 +129,14 @@ protected
     @page = @site.pages.new(page_params)
     @page.parent ||= (@site.pages.find_by_id(params[:parent_id]) || @site.pages.root)
     @page.layout ||= (@page.parent && @page.parent.layout || @site.layouts.first)
+    @variants = @site.variants.order(hierarchy:  'ASC')
   end
 
   def load_cms_page
     @page = @site.pages.find(params[:id] || params[:page_id])
     @page.attributes = page_params
     @page.layout ||= (@page.parent && @page.parent.layout || @site.layouts.first)
+    @variants = @site.variants.order(hierarchy:  'ASC')
   rescue ActiveRecord::RecordNotFound
     flash[:danger] = I18n.t('comfy.admin.cms.pages.not_found')
     redirect_to :action => :index

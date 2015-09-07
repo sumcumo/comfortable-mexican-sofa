@@ -1,3 +1,4 @@
+Drüber
 - content_for :right_column do
   = form_tag compare_comfy_admin_cms_site_page_revisions_path, :method => :get do |f|
     %ul.box.revisions.compare-revisions-widget
@@ -41,7 +42,7 @@
 = render 'comfy/admin/cms/partials/page_form_after', :form => form
 
 = form.form_group :class => 'form-actions' do
-  = form.submit t('.preview'), :name => 'preview', :id => nil, :class => 'btn btn-default'
+  = form.submit t('.previewl'), :name => 'preview', :id => nil, :class => 'btn btn-default'
   = form.submit t(@page.new_record? ? '.create' : '.update'), :name => 'save', :class => 'btn btn-primary'
   = form.submit t(@page.new_record? ? '.create_and_publish' : '.publish'), :name => 'publish', :class => 'btn btn-success'
   - unless @page.new_record? || !@page.is_published

@@ -9,13 +9,13 @@ class UpgradeTo11291 < ActiveRecord::Migration
       t.timestamps
     end
     add_index :comfy_cms_variants, :label
-    add_column :comfy_cms_blocks, :variantable_id, :integer
-    add_column :comfy_cms_blocks, :variantable_type, :string
+    add_column :comfy_cms_pages, :variant_id, :integer
+    add_column :comfy_cms_pages, :page_group, :integer
   end
 
   def self.down
-    remove_column :comfy_cms_blocks, :variantable_id, :integer
-    remove_column :comfy_cms_blocks, :variantable_type, :string
+    remove_column :comfy_cms_pages, :variant_id, :integer
+    remove_column :comfy_cms_pages, :page_group, :integer
     remove_index :comfy_cms_variants, :label
     drop_table :comfy_cms_variants
   end
